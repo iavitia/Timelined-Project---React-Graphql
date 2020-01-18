@@ -8,7 +8,7 @@ module.exports.validateRegisterInput = (
   if (username.trim() === '') {
     errors.username = 'Username is required ';
   }
-  if (!username.match(/^[0-9A-Za-z\-]+$/)) {
+  if (!username.match(/^[0-9A-Za-z\-\_]+$/)) {
     errors.username =
       'Username must contain letters, numbers, dashes, and underscores only';
     // }
