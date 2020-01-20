@@ -72,12 +72,29 @@ module.exports = {
         throw new UserInputError('Errors', { errors });
       }
 
-      // TODO: make sure user doesn't already exist
+      // make sure user and email doesn't already exist
       const user = await User.findOne({ username });
+      const emailVal = await User.findOne({ email });
+
+      if (user && emailVal) {
+        throw new UserInputError('Username and Email Address in use', {
+          errors: {
+            username: 'Username already exists',
+            email: 'Email already exists'
+          }
+        });
+      }
       if (user) {
         throw new UserInputError('Username is taken', {
           errors: {
             username: 'Username already exists'
+          }
+        });
+      }
+      if (emailVal) {
+        throw new UserInputError('Email Address in use', {
+          errors: {
+            email: 'Email already exists'
           }
         });
       }
