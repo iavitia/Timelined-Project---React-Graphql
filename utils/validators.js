@@ -11,7 +11,6 @@ module.exports.validateRegisterInput = (
   if (!username.match(/^[0-9A-Za-z\-\_]+$/)) {
     errors.username =
       'Username must contain letters, numbers, dashes, and underscores only';
-    // }
   }
   if (email.trim() === '') {
     errors.email = 'Email is required ';
