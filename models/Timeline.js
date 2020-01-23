@@ -6,7 +6,7 @@ const timelineSchema = new Schema({
   headline: String,
   summary: String,
   imgUrl: String,
-  timeline: [
+  sources: [
     {
       body: String,
       url: String,

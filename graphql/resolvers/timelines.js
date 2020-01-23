@@ -1,3 +1,5 @@
+const { AuthenticationError } = require('apollo-server');
+
 const Timeline = require('../../models/Timeline');
 const checkAuth = require('../../utils/check-auth');
 
@@ -38,6 +40,22 @@ module.exports = {
       const timeline = await newTimeline.save();
 
       return timeline;
+    },
+    async deleteTimeline(_, { timelineId }, context) {
+      const user = checkAuth(context);
+
+      try {
+        const timeline = await Timeline.findById(timelineId);
+
+        if (user.username === timeline.username) {
+          await timeline.delete();
+          return 'Deleted successfully';
+        } else {
+          throw new AuthenticationError('Action not allowed');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
     }
   }
 };
