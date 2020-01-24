@@ -1,7 +1,8 @@
 const { AuthenticationError } = require('apollo-server');
-
+const { UserInputError } = require('apollo-server');
 const Timeline = require('../../models/Timeline');
 const checkAuth = require('../../utils/check-auth');
+const { validateSources } = require('../../utils/validators');
 
 module.exports = {
   Query: {
@@ -27,6 +28,7 @@ module.exports = {
     }
   },
   Mutation: {
+    // TODO: Add validation to inputs
     async createTimeline(_, { headline, summary, imgUrl }, context) {
       const user = checkAuth(context);
       const newTimeline = new Timeline({
@@ -50,6 +52,35 @@ module.exports = {
         if (user.username === timeline.username) {
           await timeline.delete();
           return 'Deleted successfully';
+        } else {
+          throw new AuthenticationError('Action not allowed');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    // TODO: add validation for url
+    async addSources(_, { timelineId, body, url }, context) {
+      const user = checkAuth(context);
+      const { valid, errors } = validateSources(body, url);
+
+      if (!valid) {
+        throw new UserInputError('Errors', { errors });
+      }
+
+      try {
+        const timeline = await Timeline.findById(timelineId);
+
+        if (user.username === timeline.username) {
+          if (timeline) {
+            timeline.sources.push({
+              body,
+              url,
+              createdAt: new Date().toISOString()
+            });
+            await timeline.save();
+            return timeline;
+          } else throw new UserInputError('Timeline not found');
         } else {
           throw new AuthenticationError('Action not allowed');
         }

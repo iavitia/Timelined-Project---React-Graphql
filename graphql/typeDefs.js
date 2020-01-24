@@ -6,6 +6,19 @@ module.exports = gql`
     body: String!
     createdAt: String!
     username: String!
+    comments: [Comment]!
+    likes: [Like]!
+  }
+  type Comment {
+    id: ID!
+    username: String!
+    createdAt: String!
+    body: String!
+  }
+  type Like {
+    id: ID!
+    username: String!
+    createdAt: String!
   }
   type Timeline {
     id: ID!
@@ -14,6 +27,13 @@ module.exports = gql`
     headline: String!
     summary: String!
     imgUrl: String!
+    sources: [Sources!]
+  }
+  type Sources {
+    id: ID!
+    body: String
+    url: String
+    createdAt: String
   }
   type User {
     id: ID!
@@ -45,5 +65,10 @@ module.exports = gql`
       imgUrl: String!
     ): Timeline!
     deleteTimeline(timelineId: ID!): String!
+    createComment(postId: String!, body: String!): Post!
+    deleteComment(postId: ID!, commentId: ID!): Post!
+    LikePost(postId: ID!): Post!
+    likeTimeline(timelineId: ID!): Timeline!
+    addSources(timelineId: ID!, body: String!, url: String!): Timeline!
   }
 `;

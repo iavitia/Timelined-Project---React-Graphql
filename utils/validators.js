@@ -53,3 +53,23 @@ module.exports.validateLoginInput = (username, password) => {
     valid: Object.keys(errors).length < 1
   };
 };
+
+module.exports.validateSources = (body, url) => {
+  const errors = {};
+
+  if (body.trim() === '') {
+    errors.body = 'Body is required';
+  }
+  if (!body.match(/.{50,}/)) {
+    errors.body = 'Body must be at least 50 characters';
+  }
+
+  if (url.trim() === '') {
+    errors.url = 'Url is required';
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
