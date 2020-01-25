@@ -76,9 +76,15 @@ module.exports = {
             timeline.sources.push({
               body,
               url,
+              username: user.username,
               createdAt: new Date().toISOString()
             });
             await timeline.save();
+
+            context.pubsub.publish('NEW_SOURCE', {
+              newSource: timeline
+            });
+
             return timeline;
           } else throw new UserInputError('Timeline not found');
         } else {
@@ -87,6 +93,53 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
+    },
+    async deleteSource(_, { timelineId, sourceId }, context) {
+      const { username } = checkAuth(context);
+
+      const timeline = await Timeline.findById(timelineId);
+
+      if (timeline) {
+        const sourceIndex = timeline.sources.findIndex(
+          source => source.id === sourceId
+        );
+
+        if (timeline.sources[sourceIndex].username === username) {
+          timeline.sources.splice(sourceIndex, 1);
+          await timeline.save();
+          return timeline;
+        } else {
+          throw new AuthenticationError('Action not allowed');
+        }
+      } else {
+        throw new UserInputError('Timeline not found');
+      }
+    },
+    async likeTimeline(_, { timelineId }, context) {
+      const { username } = checkAuth(context);
+
+      const timeline = await Timeline.findById(timelineId);
+      if (timeline) {
+        if (timeline.likes.find(like => like.username === username)) {
+          // timeline already liked, unlike it
+          timeline.likes = timeline.likes.filter(
+            like => like.username !== username
+          );
+        } else {
+          // Not liked, like timeline
+          timeline.likes.push({
+            username,
+            createdAt: new Date().toISOString()
+          });
+        }
+        await timeline.save();
+        return timeline;
+      } else throw new UserInputError('Timeline not found');
+    }
+  },
+  Subscription: {
+    newSource: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_SOURCE')
     }
   }
 };

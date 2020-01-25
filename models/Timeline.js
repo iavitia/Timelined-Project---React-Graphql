@@ -10,6 +10,7 @@ const timelineSchema = new Schema({
     {
       body: String,
       url: String,
+      username: String,
       createdAt: String
     }
   ],
