@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 export default function() {
   const pathname = window.location.pathname;
-  const path = pathname === '/' ? 'home' : pathname.substr(1);
+  const path = pathname === '/' ? '' : pathname.substr(1);
 
   const [activeItem, setActiveItem] = useState(path);
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
   return (
-    <Menu style={{ border: 'none' }} borderless={true} size='massive'>
+    <Menu style={{ border: '0' }} borderless={true} size='massive'>
       <Menu.Item
         as={Link}
         to='/'

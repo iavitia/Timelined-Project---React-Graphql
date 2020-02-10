@@ -33,7 +33,7 @@ module.exports = {
       const user = await User.findOne({ username });
 
       if (!user) {
-        errors.general = 'User not found';
+        errors.username = 'User not found';
         throw new UserInputError(
           'There isn’t an account associated with this username',
           { errors }
@@ -42,7 +42,7 @@ module.exports = {
 
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        errors.general = 'Wrong credentials';
+        errors.password = 'Wrong credentials';
         throw new UserInputError('The password you entered is incorrect', {
           errors
         });
