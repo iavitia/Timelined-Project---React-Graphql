@@ -25,6 +25,7 @@ module.exports = {
     ...commentsResolvers.Mutation
   },
   Subscription: {
-    ...timelineResolvers.Subscription
+    ...timelineResolvers.Subscription,
+    ...commentsResolvers.Subscription
   }
 };

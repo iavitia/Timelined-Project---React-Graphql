@@ -22,6 +22,13 @@ module.exports = {
           createdAt: new Date().toISOString()
         });
         await post.save();
+        context.pubsub.publish('NEW_COMMENT', {
+          newComment: {
+            body,
+            username,
+            createdAt: new Date().toISOString()
+          }
+        });
         return post;
       } else throw new UserInputError('Post not found');
     },
@@ -45,6 +52,11 @@ module.exports = {
       } else {
         throw new UserInputError('Post not found');
       }
+    }
+  },
+  Subscription: {
+    newComment: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_COMMENT')
     }
   }
 };
