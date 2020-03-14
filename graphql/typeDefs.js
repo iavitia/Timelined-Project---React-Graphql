@@ -78,5 +78,6 @@ module.exports = gql`
   }
   type Subscription {
     newSource: Timeline!
+    newComment: Comment!
   }
 `;
