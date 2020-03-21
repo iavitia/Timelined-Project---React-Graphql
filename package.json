@@ -17,6 +17,7 @@
     "fomantic-ui-css": "^2.8.4",
     "graphql": "^14.5.8",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "mongoose": "^5.8.7"
   },
   "devDependencies": {
