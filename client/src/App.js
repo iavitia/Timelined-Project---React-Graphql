@@ -5,6 +5,8 @@ import 'fomantic-ui-css/semantic.css';
 import './App.css';
 
 import { AuthProvider } from './context/auth';
+import AuthRoute from './utils/AuthRoute';
+
 import { Home, Login, Register } from './components/pages';
 import { Navbar, Footer } from './components/organisms';
 
@@ -14,8 +16,8 @@ function App() {
       <Router>
         <Navbar />
         <Route exact path='/' component={Home} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/register' component={Register} />
+        <AuthRoute exact path='/login' component={Login} />
+        <AuthRoute exact path='/register' component={Register} />
         <Footer />
       </Router>
     </AuthProvider>
