@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import useForm from '../../utils/hooks/useForm';
+import FETCH_TIMELINES_QUERY from '../../mutations/fetchTimelines';
 
 import { Button, Form, Header } from 'semantic-ui-react';
 
@@ -15,8 +16,16 @@ export default function() {
 
   const [createTimeline, { loading }] = useMutation(CREATE_TIMELINE_MUTATION, {
     variables: values,
-    update(_, result) {
-      // console.log(result);
+    update(proxy, result) {
+      const data = proxy.readQuery({
+        query: FETCH_TIMELINES_QUERY
+      });
+      data.getTimelines = [result.data.createTimeline, ...data.getTimelines];
+      proxy.writeQuery({ query: FETCH_TIMELINES_QUERY, data });
+
+      values.headline = '';
+      values.summary = '';
+      values.imgUrl = '';
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
