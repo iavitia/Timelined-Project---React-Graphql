@@ -6,9 +6,10 @@ import './App.css';
 
 import { AuthProvider } from './context/auth';
 import AuthRoute from './utils/AuthRoute';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 import { Home, Login, Register } from './components/pages';
-import { Navbar, Footer } from './components/organisms';
+import { Navbar, Footer, TimelineForm } from './components/organisms';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path='/' component={Home} />
         <AuthRoute exact path='/login' component={Login} />
         <AuthRoute exact path='/register' component={Register} />
+        <ProtectedRoute exact path='/newtimeline' component={TimelineForm} />
         <Footer />
       </Router>
     </AuthProvider>

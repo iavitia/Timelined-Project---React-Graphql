@@ -20,6 +20,9 @@ export default function() {
           <Dropdown.Item as={Link} to='/profile'>
             Profile
           </Dropdown.Item>
+          <Dropdown.Item as={Link} to='/newtimeline'>
+            New Timeline
+          </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
         </Dropdown.Menu>
