@@ -54,6 +54,33 @@ module.exports.validateLoginInput = (username, password) => {
   };
 };
 
+module.exports.validateTimeline = (headline, summary, imgUrl) => {
+  const errors = {};
+
+  if (headline.trim() === '') {
+    errors.headline = 'Headline is required';
+  }
+  if (!headline.match(/.{50,}/)) {
+    errors.headline = 'Headline must be at least 50 characters';
+  }
+
+  if (summary.trim() === '') {
+    errors.summary = 'Summary is required';
+  }
+  if (!summary.match(/.{50,}/)) {
+    errors.summary = 'Summary must be at least 50 characters';
+  }
+
+  if (imgUrl.trim() === '') {
+    errors.imgUrl = 'Url is required';
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1
+  };
+};
+
 module.exports.validateSources = (body, url) => {
   const errors = {};
 

@@ -2,7 +2,7 @@ const { AuthenticationError } = require('apollo-server');
 const { UserInputError } = require('apollo-server');
 const Timeline = require('../../models/Timeline');
 const checkAuth = require('../../utils/check-auth');
-const { validateSources } = require('../../utils/validators');
+const { validateSources, validateTimeline } = require('../../utils/validators');
 
 module.exports = {
   Query: {
@@ -28,14 +28,19 @@ module.exports = {
     }
   },
   Mutation: {
-    // TODO: Add validation to inputs
     async createTimeline(_, { headline, summary, imgUrl }, context) {
       const user = checkAuth(context);
+      const { valid, errors } = validateTimeline(headline, summary, imgUrl);
+
+      if (!valid) {
+        throw new UserInputError('Errors', { errors });
+      }
+
       const newTimeline = new Timeline({
         headline,
         summary,
         imgUrl,
-        user: user.indexOf,
+        user: user.id,
         username: user.username,
         createdAt: new Date().toISOString()
       });
