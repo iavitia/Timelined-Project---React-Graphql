@@ -1,8 +1,9 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Grid, Container } from 'semantic-ui-react';
-import TimelineCard from '../organisms/TimelineCard';
+import { Grid, Container, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { TimelineCard } from '../organisms';
+import { Loading } from '../molecules';
 import FETCH_TIMELINES_QUERY from '../../mutations/fetchTimelines';
 
 export default function() {
@@ -20,7 +21,7 @@ export default function() {
 
         <Grid.Row>
           {loading ? (
-            <h1>Loading timelines...</h1>
+            <Loading />
           ) : (
             timelines.data &&
             timelines.data.map(timeline => (
