@@ -98,7 +98,7 @@ export default function (props) {
               <SubLink to='privacy'>Privacy Policy</SubLink>, and account
               related communications.
             </SubText>
-            <FormButtonPrimary fluid type='submit' size='big'>
+            <FormButtonPrimary fluid type='submit'>
               SIGN UP
             </FormButtonPrimary>
 
