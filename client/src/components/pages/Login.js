@@ -1,27 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import {
-  Form,
-  Container,
-  Header,
-  Button,
-  Divider,
-  Grid,
-  Card,
-  Icon
-} from 'semantic-ui-react';
+import { Form, Header, Button, Divider, Grid, Card } from 'semantic-ui-react';
+import { Container, FormButtonPrimary, FormInputBig } from '../atoms';
 
 import useForm from '../../utils/hooks/useForm';
 import LOGIN_USER from '../../mutations/loginUser';
 import { AuthContext } from '../../context/auth';
 
-export default function(props) {
+export default function (props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     username: '',
-    password: ''
+    password: '',
   });
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
@@ -32,7 +24,7 @@ export default function(props) {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: values
+    variables: values,
   });
 
   function loginUserCallback() {
@@ -40,16 +32,9 @@ export default function(props) {
   }
 
   return (
-    <Grid centered columns={2}>
-      <Grid.Column>
-        <Card
-          style={{
-            width: '450px',
-            margin: '80px 0 120px',
-            padding: '40px 30px',
-            boxShadow: '0 16px 40px rgba(0,0,0,0.12)'
-          }}
-        >
+    <Container navpadding='true'>
+      <Grid centered style={{ paddingTop: '1em' }}>
+        <Grid.Column computer={6} mobile={16}>
           <Form
             onSubmit={onSubmit}
             noValidate
@@ -62,30 +47,33 @@ export default function(props) {
             >
               Welcome Back
             </Header>
-            <Form.Input
-              placeholder='Username'
+            <FormInputBig
+              label='Username'
               name='username'
               type='text'
+              size='big'
               error={errors.username}
               value={values.username}
               onChange={onChange}
             />
-            <Form.Input
-              placeholder='Password'
+            <FormInputBig
+              label='Password'
               name='password'
               type='password'
+              size='big'
               error={errors.password}
               value={values.password}
               onChange={onChange}
             />
-            <Button fluid primary type='submit'>
-              Log in
-            </Button>
-            <Divider style={{ marginTop: '20px' }} />
-            Don't have an account? <Link to='register'>Sign up</Link>
+            <FormButtonPrimary fluid type='submit'>
+              LOG IN
+            </FormButtonPrimary>
+            <p>
+              Don't have an account? <Link to='register'>Sign up</Link>
+            </p>
           </Form>
-        </Card>
-      </Grid.Column>
-    </Grid>
+        </Grid.Column>
+      </Grid>
+    </Container>
   );
 }

@@ -1,13 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import { Form, Container, Header, Button, Divider } from 'semantic-ui-react';
+import { Form, Header, Grid } from 'semantic-ui-react';
+import {
+  Container,
+  FormButtonPrimary,
+  FormInputBig,
+  SubText,
+  SubLink,
+} from '../atoms';
 
 import useForm from '../../utils/hooks/useForm';
 import REGISTER_USER from '../../mutations/registerUser';
 import { AuthContext } from '../../context/auth';
 
-export default function(props) {
+export default function (props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
@@ -15,7 +22,7 @@ export default function(props) {
     username: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
@@ -26,7 +33,7 @@ export default function(props) {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: values
+    variables: values,
   });
 
   function registerUser() {
@@ -34,60 +41,73 @@ export default function(props) {
   }
 
   return (
-    <Container
-      style={{
-        width: '450px',
-        margin: '80px 0 100px',
-        padding: '40px 30px',
-        boxShadow: '0 16px 40px rgba(0,0,0,0.12)'
-      }}
-    >
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
-        <Header
-          style={{ margin: '20px 0' }}
-          className='ui center aligned'
-          as='h1'
-        >
-          Sign up
-        </Header>
-        <Form.Input
-          label='Username'
-          name='username'
-          type='text'
-          error={errors.username}
-          value={values.username}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Email'
-          name='email'
-          type='email'
-          error={errors.email}
-          value={values.email}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Password'
-          name='password'
-          type='password'
-          error={errors.password}
-          value={values.password}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Confirm password'
-          name='confirmPassword'
-          type='password'
-          error={errors.confirmPassword}
-          value={values.confirmPassword}
-          onChange={onChange}
-        />
-        <Button fluid primary type='submit'>
-          Create Account
-        </Button>
-        <Divider style={{ marginTop: '20px' }} />
-        Already have an account? <Link to='login'>Log in</Link>
-      </Form>
+    <Container navpadding='true'>
+      <Grid centered style={{ paddingTop: '1em' }}>
+        <Grid.Column computer={6} mobile={16}>
+          <Form
+            onSubmit={onSubmit}
+            noValidate
+            className={loading ? 'loading' : ''}
+          >
+            <Header
+              style={{ margin: '20px 0' }}
+              className='ui center aligned'
+              as='h1'
+            >
+              Create an Account
+            </Header>
+            <FormInputBig
+              label='Username'
+              name='username'
+              type='text'
+              size='big'
+              error={errors.username}
+              value={values.username}
+              onChange={onChange}
+            />
+            <FormInputBig
+              label='Email'
+              name='email'
+              type='email'
+              size='big'
+              error={errors.email}
+              value={values.email}
+              onChange={onChange}
+            />
+            <FormInputBig
+              label='Password'
+              name='password'
+              type='password'
+              size='big'
+              error={errors.password}
+              value={values.password}
+              onChange={onChange}
+            />
+            <FormInputBig
+              label='Confirm password'
+              name='confirmPassword'
+              type='password'
+              size='big'
+              error={errors.confirmPassword}
+              value={values.confirmPassword}
+              onChange={onChange}
+            />
+            <SubText style={{ marginTop: '20px' }}>
+              By creating an account you agree to our{' '}
+              <SubLink to='terms'>Terms and Conditions</SubLink>,{' '}
+              <SubLink to='privacy'>Privacy Policy</SubLink>, and account
+              related communications.
+            </SubText>
+            <FormButtonPrimary fluid type='submit' size='big'>
+              SIGN UP
+            </FormButtonPrimary>
+
+            <p>
+              Already have an account? <Link to='login'>Log in</Link>
+            </p>
+          </Form>
+        </Grid.Column>
+      </Grid>
     </Container>
   );
 }
