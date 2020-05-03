@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Dropdown, Image, Menu } from 'semantic-ui-react';
+import { Image, Input, Icon } from 'semantic-ui-react';
+import { Nav, Dropdown } from '../atoms';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth';
 
-export default function() {
+export default function () {
   const { user, logout } = useContext(AuthContext);
   const pathname = window.location.pathname;
   const path = pathname === '/' ? '' : pathname.substr(1);
@@ -30,40 +31,34 @@ export default function() {
     </>
   ) : (
     <>
-      <Menu.Item
-        name='login'
-        as={Link}
-        to='/login'
-        active={activeItem === 'login'}
-        onClick={handleItemClick}
-      />
-
-      <Menu.Item
-        name='signup'
-        as={Link}
-        to='/register'
-        active={activeItem === 'signup'}
-        onClick={handleItemClick}
-      />
+      <Dropdown item text='Sign Up'>
+        <Dropdown.Menu>
+          <Dropdown.Item as={Link} to='/login'>
+            Log In
+          </Dropdown.Item>
+          <Dropdown.Item as={Link} to='/register'>
+            Create Account
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </>
   );
 
   return (
-    <Menu style={{ border: '0' }} borderless={true} size='massive'>
-      <Menu.Item
+    <Nav borderless={true} fixed='top' size='small'>
+      <Dropdown item icon='sidebar' simple></Dropdown>
+
+      <Nav.Item
         as={Link}
         to='/'
         header
         active={activeItem === 'home'}
         onClick={handleItemClick}
       >
-        <Image
-          style={{ height: '35px' }}
-          src='https://react.semantic-ui.com/logo.png'
-        />
-      </Menu.Item>
+        <Image size='mini' src='/t3.svg' />
+      </Nav.Item>
 
-      <Menu.Menu position='right'>{navLinks}</Menu.Menu>
-    </Menu>
+      <Nav.Menu position='right'>{navLinks}</Nav.Menu>
+    </Nav>
   );
 }
