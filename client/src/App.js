@@ -2,25 +2,41 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import 'fomantic-ui-css/semantic.css';
+// import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 import { AuthProvider } from './context/auth';
 import AuthRoute from './utils/AuthRoute';
 import ProtectedRoute from './utils/ProtectedRoute';
 
-import { Home, Login, Register } from './components/pages';
+import { Home, Login, Register, SingleTimeline } from './components/pages';
 import { Navbar, Footer, TimelineForm } from './components/organisms';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Navbar />
-        <Route exact path='/' component={Home} />
-        <AuthRoute exact path='/login' component={Login} />
-        <AuthRoute exact path='/register' component={Register} />
-        <ProtectedRoute exact path='/newtimeline' component={TimelineForm} />
-        <Footer />
+        <div className='page-container'>
+          <div className='content-wrap'>
+            <Navbar className='header' />
+            <div className='main'>
+              <Route exact path='/' component={Home} />
+              <AuthRoute exact path='/login' component={Login} />
+              <AuthRoute exact path='/register' component={Register} />
+              <ProtectedRoute
+                exact
+                path='/newtimeline'
+                component={TimelineForm}
+              />
+              <Route
+                exact
+                path='/timelines/:timelineId'
+                component={SingleTimeline}
+              />
+            </div>
+          </div>
+          <Footer className='footer' />
+        </div>
       </Router>
     </AuthProvider>
   );
