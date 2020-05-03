@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Image, Input, Icon } from 'semantic-ui-react';
-import { Nav, Dropdown } from '../atoms';
+import { Image } from 'semantic-ui-react';
+import { Dropdown, Nav } from '../atoms';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth';

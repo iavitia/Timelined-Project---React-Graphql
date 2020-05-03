@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import { Form, Header, Button, Divider, Grid, Card } from 'semantic-ui-react';
+import { Form, Grid, Header } from 'semantic-ui-react';
 import { Container, FormButtonPrimary, FormInputBig } from '../atoms';
 
 import useForm from '../../utils/hooks/useForm';

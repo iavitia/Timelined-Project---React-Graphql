@@ -1,19 +1,20 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Grid, Container, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Container } from '../atoms';
+import { Grid } from 'semantic-ui-react';
 import { TimelineCard } from '../organisms';
 import { Loading } from '../molecules';
 import FETCH_TIMELINES_QUERY from '../../mutations/fetchTimelines';
 
-export default function() {
+export default function () {
   let timelines = '';
   const { loading, data } = useQuery(FETCH_TIMELINES_QUERY);
 
   if (data) timelines = { data: data.getTimelines };
 
   return (
-    <Container>
+    <Container navpadding='true'>
       <Grid columns={3}>
         <Grid.Row>
           <h1>Recent Timelines</h1>
@@ -24,7 +25,7 @@ export default function() {
             <Loading />
           ) : (
             timelines.data &&
-            timelines.data.map(timeline => (
+            timelines.data.map((timeline) => (
               <Grid.Column key={timeline.id} style={{ marginBottom: '20px' }}>
                 <TimelineCard timeline={timeline} />
               </Grid.Column>

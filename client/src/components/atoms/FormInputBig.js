@@ -7,8 +7,8 @@ export default styled(Form.Input)`
       border-radius: 0;
 
       &:focus {
-        border-radius: 0;
         border: 1px solid #303845;
+        border-radius: 0;
       }
     }
 
