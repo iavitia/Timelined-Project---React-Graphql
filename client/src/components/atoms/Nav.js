@@ -3,8 +3,8 @@ import { Menu } from 'semantic-ui-react';
 
 export default styled(Menu)`
   &&& {
-    box-shadow: none;
     border-bottom: 1px solid #e5e5e5;
+    box-shadow: none;
 
     a {
       background-color: #fff;
