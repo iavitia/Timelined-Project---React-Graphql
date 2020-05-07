@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Image, Card } from 'semantic-ui-react';
-import { LikeButton } from '../molecules';
+import { Card, Image } from 'semantic-ui-react';
+import { DeleteButton, LikeButton } from '../molecules';
 
 import { AuthContext } from '../../context/auth';
-import { useContext } from 'react';
 
-function TimelineCard({
-  timeline: { id, headline, summary, likes, likeCount, imgUrl }
+export default function ({
+  timeline: { id, username, headline, summary, likes, likeCount, imgUrl },
 }) {
   const { user } = useContext(AuthContext);
 
@@ -24,9 +23,8 @@ function TimelineCard({
           {headline}
         </Card.Header>
         <LikeButton user={user} timeline={{ id, likes, likeCount }} />
+        {user && user.username === username && <DeleteButton timelineId={id} />}
       </Card.Content>
     </Card>
   );
 }
-
-export default TimelineCard;

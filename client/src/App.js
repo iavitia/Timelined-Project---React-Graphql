@@ -18,24 +18,22 @@ function App() {
       <Router>
         <div className='page-container'>
           <div className='content-wrap'>
-            <Navbar className='header' />
-            <div className='main'>
-              <Route exact path='/' component={Home} />
-              <AuthRoute exact path='/login' component={Login} />
-              <AuthRoute exact path='/register' component={Register} />
-              <ProtectedRoute
-                exact
-                path='/newtimeline'
-                component={TimelineForm}
-              />
-              <Route
-                exact
-                path='/timelines/:timelineId'
-                component={SingleTimeline}
-              />
-            </div>
+            <Navbar />
+            <Route exact path='/' component={Home} />
+            <AuthRoute exact path='/login' component={Login} />
+            <AuthRoute exact path='/register' component={Register} />
+            <ProtectedRoute
+              exact
+              path='/newtimeline'
+              component={TimelineForm}
+            />
+            <Route
+              exact
+              path='/timelines/:timelineId'
+              component={SingleTimeline}
+            />
           </div>
-          <Footer className='footer' />
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
