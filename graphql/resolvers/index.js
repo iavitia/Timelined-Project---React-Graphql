@@ -7,25 +7,26 @@ module.exports = {
   Post: {
     likeCount(parent) {
       return parent.likes.length;
-    }
+    },
   },
   Timeline: {
     likeCount(parent) {
       return parent.likes.length;
-    }
+    },
   },
   Query: {
     ...postsResolvers.Query,
-    ...timelineResolvers.Query
+    ...timelineResolvers.Query,
+    ...usersResolvers.Query,
   },
   Mutation: {
     ...usersResolvers.Mutation,
     ...postsResolvers.Mutation,
     ...timelineResolvers.Mutation,
-    ...commentsResolvers.Mutation
+    ...commentsResolvers.Mutation,
   },
   Subscription: {
     ...timelineResolvers.Subscription,
-    ...commentsResolvers.Subscription
-  }
+    ...commentsResolvers.Subscription,
+  },
 };

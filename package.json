@@ -7,7 +7,8 @@
     "start": "nodemon index",
     "server": "node index",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "devserv": "concurrently \"npm run start\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",

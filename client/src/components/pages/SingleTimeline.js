@@ -67,7 +67,7 @@ export default function (props) {
             <Grid.Column computer={6} mobile={8}>
               <div>
                 By:{' '}
-                <Link style={{ color: '#000' }} to={`/${username}`}>
+                <Link style={{ color: '#000' }} to={`/profile/${username}`}>
                   {username}
                 </Link>
               </div>
