@@ -15,6 +15,20 @@ const FETCH_USER_QUERY = gql`
         facebook
         instagram
       }
+      timelines {
+        id
+        username
+        createdAt
+        headline
+        summary
+        imgUrl
+        sources {
+          body
+          url
+          createdAt
+        }
+        likeCount
+      }
     }
   }
 `;

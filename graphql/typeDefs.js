@@ -28,8 +28,8 @@ module.exports = gql`
     headline: String!
     summary: String!
     imgUrl: String!
-    sources: [Sources!]
-    likes: [Like!]
+    sources: [Sources]!
+    likes: [Like]!
     likeCount: Int!
   }
   type Sources {
@@ -42,9 +42,21 @@ module.exports = gql`
   type User {
     id: ID!
     email: String!
+    about: String
+    profilePic: String
     token: String!
     username: String!
+    name: String
     createdAt: String!
+    contact: Contact
+    timelines: [Timeline]!
+  }
+
+  type Contact {
+    email: String
+    facebook: String
+    instagram: String
+    twitter: String
   }
   input RegisterInput {
     username: String!
@@ -55,8 +67,12 @@ module.exports = gql`
   type Query {
     getPosts: [Post]
     getPost(postId: ID): Post
+    getUsers: [User]
+    getUser(username: String!): User
     getTimelines: [Timeline]
     getTimeline(timelineId: ID): Timeline
+    getTimelinesByUsername(username: String!): [Timeline]
+    getPostByUsername(username: String!): Post
   }
   type Mutation {
     register(registerInput: RegisterInput): User!

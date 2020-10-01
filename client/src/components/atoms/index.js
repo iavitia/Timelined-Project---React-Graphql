@@ -1,3 +1,4 @@
+export { default as CategoryLink } from './CategoryLink';
 export { default as Container } from './Container';
 export { default as Dropdown } from './Dropdown';
 export { default as FormButtonPrimary } from './FormButtonPrimary';

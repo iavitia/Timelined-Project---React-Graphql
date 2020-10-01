@@ -14,6 +14,14 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async getTimelinesByUsername(_, { username }) {
+      try {
+        const timelines = await Timeline.find({ username: username });
+        return timelines;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async getTimeline(_, { timelineId }) {
       try {
         const timeline = await Timeline.findById(timelineId);
@@ -25,28 +33,32 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
-    }
+    },
   },
   Mutation: {
     async createTimeline(_, { headline, summary, imgUrl }, context) {
-      const user = checkAuth(context);
-      const { valid, errors } = validateTimeline(headline, summary, imgUrl);
+      try {
+        const user = checkAuth(context);
+        const { valid, errors } = validateTimeline(headline, summary, imgUrl);
 
-      if (!valid) {
-        throw new UserInputError('Errors', { errors });
+        if (!valid) {
+          throw new UserInputError('Errors', { errors });
+        }
+
+        const newTimeline = new Timeline({
+          headline,
+          summary,
+          imgUrl,
+          user: user.id,
+          username: user.username,
+          createdAt: new Date().toISOString(),
+        });
+        const timeline = await newTimeline.save();
+
+        return timeline;
+      } catch (err) {
+        throw new Error(err);
       }
-
-      const newTimeline = new Timeline({
-        headline,
-        summary,
-        imgUrl,
-        user: user.id,
-        username: user.username,
-        createdAt: new Date().toISOString()
-      });
-      const timeline = await newTimeline.save();
-
-      return timeline;
     },
     async deleteTimeline(_, { timelineId }, context) {
       const user = checkAuth(context);
@@ -82,12 +94,12 @@ module.exports = {
               body,
               url,
               username: user.username,
-              createdAt: new Date().toISOString()
+              createdAt: new Date().toISOString(),
             });
             await timeline.save();
 
             context.pubsub.publish('NEW_SOURCE', {
-              newSource: timeline
+              newSource: timeline,
             });
 
             return timeline;
@@ -106,7 +118,7 @@ module.exports = {
 
       if (timeline) {
         const sourceIndex = timeline.sources.findIndex(
-          source => source.id === sourceId
+          (source) => source.id === sourceId
         );
 
         if (timeline.sources[sourceIndex].username === username) {
@@ -125,26 +137,26 @@ module.exports = {
 
       const timeline = await Timeline.findById(timelineId);
       if (timeline) {
-        if (timeline.likes.find(like => like.username === username)) {
+        if (timeline.likes.find((like) => like.username === username)) {
           // timeline already liked, unlike it
           timeline.likes = timeline.likes.filter(
-            like => like.username !== username
+            (like) => like.username !== username
           );
         } else {
           // Not liked, like timeline
           timeline.likes.push({
             username,
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
           });
         }
         await timeline.save();
         return timeline;
       } else throw new UserInputError('Timeline not found');
-    }
+    },
   },
   Subscription: {
     newSource: {
-      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_SOURCE')
-    }
-  }
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_SOURCE'),
+    },
+  },
 };
