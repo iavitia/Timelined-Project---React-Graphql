@@ -46,6 +46,7 @@ export default function (props) {
           name={name}
           username={username}
           contact={contact}
+          about={about}
         />
 
         <Divider />

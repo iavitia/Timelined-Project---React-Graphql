@@ -1,61 +1,37 @@
 import React from 'react';
 import { Button, Grid, Header, Image } from 'semantic-ui-react';
+import { IconSocial, ThemeDivider } from '../../atoms';
 
-export default function ({ profilePic, name, username, contact }) {
+export default function ({ profilePic, name, username, contact, about }) {
   let checkName = name === null ? username : name;
 
   return (
     <Grid padded='vertically'>
       <Grid.Row>
-        <Grid.Column computer={2} tablet={3} mobile={3}>
+        <Grid.Column computer={2} tablet={3} mobile={4}>
           <Image size='small' src={profilePic} />
         </Grid.Column>
 
-        <Grid.Column computer={14} tablet={13} mobile={13}>
-          <Header as='h1'>{checkName}</Header>
-          {contact.facebook && (
-            <Button
-              basic
-              icon='facebook'
-              color='facebook'
-              as='a'
-              role='link'
-              href='https://facebook.com'
-              target='_blank'
-            />
-          )}
+        <Grid.Column computer={6} tablet={6} mobile={11}>
+          <Header as='h1' style={{ marginBottom: '5px' }}>
+            {checkName}
+          </Header>
+
           {contact.twitter && (
-            <Button
-              basic
-              icon='twitter'
-              color='twitter'
-              as='a'
-              role='link'
-              href='https://twitter.com'
-              target='_blank'
-            />
+            <IconSocial url={contact.twitter} name='twitter' />
           )}
+
           {contact.instagram && (
-            <Button
-              basic
-              icon='instagram'
-              color='instagram'
-              as='a'
-              role='link'
-              href='https://instagram.com'
-              target='_blank'
-            />
+            <IconSocial url={contact.instagram} name='instagram' />
           )}
-          {contact.email && (
-            <Button
-              basic
-              icon='mail'
-              as='a'
-              role='link'
-              href='https://mail.com'
-              target='_blank'
-            />
+
+          {contact.facebook && (
+            <IconSocial url={contact.facebook} name='facebook f' />
           )}
+
+          {contact.email && <IconSocial url={contact.email} name='mail' />}
+
+          <p style={{ marginTop: '10px' }}>{about}</p>
         </Grid.Column>
       </Grid.Row>
     </Grid>
