@@ -6,6 +6,7 @@ export default styled(Link)`
   font-weight: 700;
   letter-spacing: 3px;
   font-size: 10px;
+  text-transform: uppercase;
 
   &:hover {
     opacity: 0.5;

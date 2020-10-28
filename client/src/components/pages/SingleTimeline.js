@@ -4,8 +4,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { Button, Grid, Header, Icon, Image } from 'semantic-ui-react';
-import { Container, SubText } from '../atoms';
+import { Grid, Header, Icon, Image, Divider, List } from 'semantic-ui-react';
+import { Container, CategoryLink } from '../atoms';
 import { DeleteButton, LikeButton, Loading } from '../molecules';
 import { TimelineSource } from '../organisms';
 
@@ -47,55 +47,64 @@ export default function (props) {
 
     postMarkup = (
       <Container navpadding='true'>
-        <Grid textAlign='left' centered padded='vertically'>
-          <Grid.Row style={{ padding: '28px 0 0' }}>
+        <Grid textAlign='left' padded='vertically'>
+          <Grid.Row className='pt-8'>
             <Grid.Column computer={12} mobile={16}>
-              <SubText>Updated {moment(createdAt).fromNow()}</SubText>
-            </Grid.Column>
-          </Grid.Row>
+              <CategoryLink to='/'>Technology</CategoryLink>
 
-          <Grid.Row>
-            <Grid.Column computer={12} mobile={16}>
-              <Header as='h1'>
+              <Header as='h1' className='mt-4'>
                 {headline}
-                <Header.Subheader>{summary}</Header.Subheader>
+                <Header.Subheader className='mt-2'>{summary}</Header.Subheader>
               </Header>
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column computer={6} mobile={8}>
-              <div>
-                By:{' '}
-                <Link style={{ color: '#000' }} to={`/profile/${username}`}>
-                  {username}
-                </Link>
-              </div>
-            </Grid.Column>
-            <Grid.Column computer={6} mobile={8} textAlign='right'>
-              <Button icon>
-                <Icon name='bookmark outline' />
-              </Button>
-              <LikeButton user={user} timeline={{ id, likes, likeCount }} />
-              {user && user.username === username && (
-                <DeleteButton
-                  timelineId={id}
-                  callback={deleteTimelineCallback}
-                />
-              )}
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
+          <Grid.Row className='pt-4 pb-0'>
             <Grid.Column computer={12} mobile={16}>
               <Image src={imgUrl} float='right' fluid />
             </Grid.Column>
-            <Grid.Column computer={12} mobile='16'>
-              <SubText>Source:</SubText>
+            <Grid.Column computer={12} mobile='16' className='pt-3'>
+              <p>Source:</p>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row className='py-0'>
+            <Grid.Column computer={12} mobile={16}>
+              <Divider />
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column computer={12} mobile={16}>
+              <List>
+                <List.Item>
+                  <List.Content floated='right'>
+                    <LikeButton
+                      user={user}
+                      timeline={{ id, likes, likeCount }}
+                    />
+                    <Icon name='bookmark outline' size='large' />
+                    {user && user.username === username && (
+                      <DeleteButton
+                        timelineId={id}
+                        callback={deleteTimelineCallback}
+                      />
+                    )}
+                  </List.Content>
+
+                  <List.Content>
+                    <List.Header>
+                      By <Link to={`/profile/${username}`}>{username}</Link>
+                    </List.Header>
+                    {moment(createdAt).format('MM / DD / YYYY')}
+                  </List.Content>
+                </List.Item>
+              </List>
             </Grid.Column>
           </Grid.Row>
         </Grid>
 
-        <Grid centered>
+        <Grid>
           {sources.map((source) => (
             <TimelineSource source={source} key={source.id} />
           ))}
