@@ -7,8 +7,9 @@
   min-height: 100vh;
 }
 
-.content-wrap {
+.main {
   flex: 1;
+  margin-top: 60.13px;
 }
 
 .opacity {

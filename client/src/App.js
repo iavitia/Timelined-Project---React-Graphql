@@ -23,8 +23,8 @@ function App() {
     <AuthProvider>
       <Router>
         <div className='page-container'>
-          <div className='content-wrap'>
-            <Navbar />
+          <Navbar />
+          <div className='main'>
             <Route exact path='/' component={Home} />
             <AuthRoute exact path='/login' component={Login} />
             <AuthRoute exact path='/register' component={Register} />
