@@ -17,8 +17,7 @@ export default function ({
         <Card.Header
           as={Link}
           to={`/timelines/${id}`}
-          style={{ margin: '25px 0' }}
-          className='ui center aligned'
+          className='ui center aligned mb-5 mt-5'
         >
           {headline}
         </Card.Header>

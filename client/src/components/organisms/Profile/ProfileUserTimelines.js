@@ -26,7 +26,7 @@ export default function ({ timelines }) {
             <CategoryLink to={`/timelines/${timeline.id}`}>NEWS</CategoryLink>
 
             <Link to={`/timelines/${timeline.id}`}>
-              <Header className='opacity' style={{ marginTop: '5px' }} as='h1'>
+              <Header className='opacity mt-1' as='h1'>
                 {timeline.headline}
               </Header>
             </Link>

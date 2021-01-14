@@ -1,14 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import { Form, Grid, Header } from 'semantic-ui-react';
-import {
-  Container,
-  FormButtonPrimary,
-  FormInputBig,
-  SubLink,
-  SubText,
-} from '../atoms';
+import { Container, Form, Grid, Header } from 'semantic-ui-react';
+import { FormButtonPrimary, FormInputBig, SubLink, SubText } from '../atoms';
 
 import useForm from '../../utils/hooks/useForm';
 import REGISTER_USER from '../../mutations/registerUser';
@@ -41,19 +35,15 @@ export default function (props) {
   }
 
   return (
-    <Container navpadding='true'>
-      <Grid centered style={{ paddingTop: '1em' }}>
+    <Container className='pt-8'>
+      <Grid centered>
         <Grid.Column computer={6} mobile={16}>
           <Form
             onSubmit={onSubmit}
             noValidate
             className={loading ? 'loading' : ''}
           >
-            <Header
-              style={{ margin: '20px 0' }}
-              className='ui center aligned'
-              as='h1'
-            >
+            <Header className='ui center aligned mt-6 mb-6' as='h1'>
               Create an Account
             </Header>
             <FormInputBig
@@ -92,7 +82,7 @@ export default function (props) {
               value={values.confirmPassword}
               onChange={onChange}
             />
-            <SubText style={{ marginTop: '20px' }}>
+            <SubText>
               By creating an account you agree to our{' '}
               <SubLink to='terms'>Terms and Conditions</SubLink>,{' '}
               <SubLink to='privacy'>Privacy Policy</SubLink>, and account

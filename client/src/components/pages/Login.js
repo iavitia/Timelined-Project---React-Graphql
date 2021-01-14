@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import { Form, Grid, Header } from 'semantic-ui-react';
-import { Container, FormButtonPrimary, FormInputBig } from '../atoms';
+import { Container, Form, Grid, Header } from 'semantic-ui-react';
+import { FormButtonPrimary, FormInputBig } from '../atoms';
 
 import useForm from '../../utils/hooks/useForm';
 import LOGIN_USER from '../../mutations/loginUser';
@@ -32,19 +32,15 @@ export default function (props) {
   }
 
   return (
-    <Container navpadding='true'>
-      <Grid centered style={{ paddingTop: '1em' }}>
+    <Container className='pt-8'>
+      <Grid centered>
         <Grid.Column computer={6} mobile={16}>
           <Form
             onSubmit={onSubmit}
             noValidate
             className={loading ? 'loading' : ''}
           >
-            <Header
-              style={{ margin: '20px 0' }}
-              className='ui center aligned'
-              as='h1'
-            >
+            <Header className='ui center aligned mt-6 mb-6' as='h1'>
               Welcome Back
             </Header>
             <FormInputBig

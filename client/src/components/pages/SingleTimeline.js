@@ -4,8 +4,16 @@ import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { Grid, Header, Icon, Image, Divider, List } from 'semantic-ui-react';
-import { Container, CategoryLink } from '../atoms';
+import {
+  Container,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Divider,
+  List,
+} from 'semantic-ui-react';
+import { CategoryLink } from '../atoms';
 import { DeleteButton, LikeButton, Loading } from '../molecules';
 import { TimelineSource } from '../organisms';
 
@@ -46,7 +54,7 @@ export default function (props) {
     } = data.getTimeline;
 
     postMarkup = (
-      <Container navpadding='true'>
+      <Container>
         <Grid textAlign='left' padded='vertically'>
           <Grid.Row className='pt-8'>
             <Grid.Column computer={12} mobile={16}>

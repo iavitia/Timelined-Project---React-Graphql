@@ -1,14 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import {
-  Container,
-  Divider,
-  Grid,
-  Image,
-  List,
-  Segment,
-} from 'semantic-ui-react';
+import { Grid, Image, List, Segment } from 'semantic-ui-react';
 
 export default function () {
   return (

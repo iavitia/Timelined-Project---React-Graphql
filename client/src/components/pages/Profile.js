@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Divider } from 'semantic-ui-react';
-import { Container } from '../atoms';
+import { Container, Divider } from 'semantic-ui-react';
 import { ProfileUser, ProfileUserTimelines } from '../organisms';
 import { Loading } from '../molecules';
 
@@ -22,7 +21,7 @@ export default function (props) {
   if (loading) return <Loading />;
   if (error) {
     console.log(error);
-    return <Container navpadding='true'>error</Container>;
+    return <Container>error</Container>;
   }
 
   let userMarkup;
@@ -40,7 +39,7 @@ export default function (props) {
     } = data.getUser;
 
     userMarkup = (
-      <Container navpadding='true'>
+      <Container>
         <ProfileUser
           profilePic={profilePic}
           name={name}
